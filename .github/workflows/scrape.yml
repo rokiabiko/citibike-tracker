@@ -1,0 +1,41 @@
+name: Scrape CitiBike Data
+
+on:
+  schedule:
+    # Run every 30 minutes
+    - cron: '0,30 * * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  scrape:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      # Install uv (The blazing fast package manager)
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+
+      # Set up Python using uv
+      - name: Set up Python 3.12
+        run: uv python install 3.12
+
+      # Install dependencies into a virtual environment
+      # uv automatically creates a .venv for you
+      - name: Install dependencies
+        run: uv pip install -r requirements.txt --system
+
+      # Run the script using the system python (since we used --system above)
+      - name: Run Scraper
+        run: python scrape.py
+
+      # Save the data back to the repo
+      - name: Commit and Push changes
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "Data update: ${{ github.event.head_commit.message }}"
+          file_pattern: data/*.csv
