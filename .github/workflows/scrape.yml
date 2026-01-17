@@ -35,7 +35,7 @@ jobs:
 
       # Run the script using the virtual environment's python
       - name: Run Scraper
-        run: uv run python scrape.py
+        run: uv run python scraper.py
 
       # Save the data back to the repo
       - name: Commit and Push changes
