@@ -1,6 +1,7 @@
 import requests
 import pandas as pd
 from datetime import datetime
+from zoneinfo import ZoneInfo
 import os
 import sys
 
@@ -33,7 +34,8 @@ def main():
         stations = data['data']['stations']
         
         # 3. Setup file path with TODAY'S DATE
-        fetch_time = datetime.now()
+        # Use timezone-aware datetime for New York
+        fetch_time = datetime.now(ZoneInfo("America/New_York"))
         date_str = fetch_time.strftime("%Y-%m-%d")
         
         # Folder: data/
