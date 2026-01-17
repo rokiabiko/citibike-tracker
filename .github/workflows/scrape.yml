@@ -24,6 +24,10 @@ jobs:
       - name: Set up Python 3.12
         run: uv python install 3.12
 
+      # Create a virtual environment
+      - name: Create virtual environment
+        run: uv venv
+
       # Install dependencies into a virtual environment
       # uv automatically creates a .venv for you
       - name: Install dependencies
