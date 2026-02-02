@@ -1,13 +1,6 @@
 name: Scrape CitiBike Data
 
-on:
-  schedule:
-    # Run every 30 minutes
-    - cron: '0,30 * * * *'
-  workflow_dispatch:
 
-permissions:
-  contents: write
 
 jobs:
   scrape:
